@@ -3,6 +3,7 @@ package com.jamesanton;
 import com.amazon.speech.speechlet.Speechlet;
 import com.amazon.speech.speechlet.servlet.SpeechletServlet;
 import com.jamesanton.alexa.DefaultSpeechlet;
+import com.jamesanton.alexa.IntentProcessor;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -27,15 +28,10 @@ public class AlexaSampleApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	public Servlet alexaServlet() {
+	public Servlet alexaServlet(DefaultSpeechlet defaultSpeechlet) {
 		SpeechletServlet servlet = new SpeechletServlet();
-		servlet.setSpeechlet(defaultSpeechlet());
+		servlet.setSpeechlet(defaultSpeechlet);
 		return servlet;
-	}
-
-	@Bean
-	public Speechlet defaultSpeechlet() {
-		return new DefaultSpeechlet();
 	}
 
 	@Override
