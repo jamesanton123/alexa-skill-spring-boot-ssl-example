@@ -14,7 +14,7 @@ public class IntentProcessor {
     Map<String, String> intentInOut = new HashMap<String, String>() {{
         put("onCallThisWeek", "One of the developers is on call this week.");
         put("onCallNextWeek", "Someone else is on call next week.");
-        put("onCallSep302018", "Not me.");
+        put("onCallSepThirty", "Not me.");
     }};
 
     public SpeechletResponse processIntent(Intent intent) {
