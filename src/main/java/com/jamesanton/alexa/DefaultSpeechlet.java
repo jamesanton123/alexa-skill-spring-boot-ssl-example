@@ -5,12 +5,20 @@ import com.amazon.speech.speechlet.*;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultSpeechlet implements Speechlet {
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultSpeechlet.class);
+
+    private IntentProcessor intentProcessor;
+
+    @Autowired
+    public DefaultSpeechlet(IntentProcessor intentProcessor) {
+        this.intentProcessor = intentProcessor;
+    }
 
     @Override
     public void onSessionStarted(SessionStartedRequest request, Session session) throws SpeechletException {
@@ -29,12 +37,7 @@ public class DefaultSpeechlet implements Speechlet {
         if (intent == null)
             throw new SpeechletException("Unrecognized intent");
 
-        String intentName = intent.getName();
-        SpeechletResponse response = new SpeechletResponse();
-        response.setOutputSpeech(new PlainTextOutputSpeech(){{
-            setText("This is some example alexa output");
-        }});
-        return response;
+        return intentProcessor.processIntent(intent);
     }
 
     @Override
